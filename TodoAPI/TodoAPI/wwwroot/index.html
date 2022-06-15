@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--Set up the header for the webpage-->
+
+    <!--This defines type of character encoding - used to convert text into machine readable-->
+    <meta charset="utf-8" />
+    <title>Declan's CRUD</title>
+    <!--Create a relationship between current doc
+        and linked doc. Aka create a stylesheet and link it-->
+    <link rel="stylesheet" href="CSS/site.css" />
+
+</head>
+
+<!--create the body of the website: 
+    1. define adding, editing, deleting todo items-->
+<body>
+  
+    <h1>Declan's CRUD</h1>
+    <h3>Add</h3>
+
+    <!--Create a form for submitting data/creating a new todo (POST request)-->
+    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
+        <input type="text" id="add-name" placeholder="New to-do"/>
+        <input type="submit" value="Add"/>
+    </form>
+
+    <!--Create a division container to section up website
+        Allows for styling of all components in section. 
+        
+        Create a form for editing information-->
+    <div id="editForm">
+        <h3>Edit</h3>
+        <form action="javascript:void(0);" onsubmit="updateItem()">
+            <input type="hidden" id="edit-id"/>
+            <input type="checkbox" id="edit-isComplete" />
+            <input type="text" id="edit-name" />
+            <input type="submit" value="Save" />
+            <!--a is used for hyperlinking
+                  in this case it is used to close the input
+                  when the symbol is clicked. 
+                  Symbol defined by &#10006 (X)-->
+            <a onclick="closeInput()" aria-label="Close">&#10006</a>
+        </form>
+    </div>
+
+    <!--Paragraph element-->
+    <p id="counter"></p>
+
+    <!--Create a table to display the to-dos created-->
+    <table>
+        <!--Define the table row headers-->
+        <tr>
+
+            <th>Is Complete?</th>
+            <th>Name</th>
+            <th</th>
+            <th></th>
+
+        </tr>
+        <!--define the table's body as todos-->
+        <tbody id="todos"></tbody>
+    </table>
+
+    <!--Link the script to be used for these functions-->
+    <script src="JS/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        getItems();
+    </script>
+
+</body>
+</html>
