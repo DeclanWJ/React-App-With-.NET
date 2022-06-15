@@ -1,2 +1,38 @@
-﻿body {
+﻿/* CSS style sheet for main website
+    
+    Style sheets are used to create a uniform style for specific
+    pieces of a website. Button's, text, font, colors. 
+    
+    Can create different style sheets for different pages. 
+*/
+
+/*Create a input type for the id submit
+    button with the aira-label font
+*/
+input[type = 'submit'], button, [aira-label]{
+    cursor: pointer;
+}
+
+#editForm{
+    display:none;
+}
+
+/*Style the table form*/
+table{
+    font-family: Arial, sans-serif;
+    border: 1px solid; 
+    border-collapse: collapse; 
+
+}
+
+/*Style for the table headers*/
+th {
+    background-color: #f8f8f8; /*hex code for color*/
+    padding: 5px;
+}
+
+/*Style table data*/
+td{
+    border: 1px solid;
+    padding: 5px;
 }
