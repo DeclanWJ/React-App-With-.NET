@@ -2,7 +2,7 @@
 
 /* Define variables for the uri (uniform resource identifier)
    As well as an array to store the todos. */
-const uri = 'API/todoitems';
+const uri = 'api/todoitems';
 let todos = [];
 
 
@@ -13,9 +13,9 @@ function getItems() {
       Send the data to be displayed (then used in display method)
       Catch errors that may occur */
     fetch(uri)
-        .then(response => response.json())
-        .then(data => _displayItems(data))
-        .catch(error => console.error('Unable to get items.', error));
+      .then(response => response.json())
+      .then(data => _displayItems(data))
+      .catch(error => console.error('Unable to get items.', error));
 
 }
 
@@ -41,10 +41,10 @@ function addItem() {
         },
         body: JSON.stringify(item)
     })
-        .then(response => respone.json())
+        .then(response => response.json())
         .then(() => {
-            getItems();
-            addNameTextBox.value = '';
+          getItems();
+          addNameTextBox.value = '';
         })
         .catch(error => console.error('Unable to add item.', error));
 
@@ -82,8 +82,8 @@ function updateItem() {
     const item = {
 
         id: parseInt(itemId, 10), /* Parse from long (64bit) to int (32bit) */
-        isComplete: document.getElementById('isComplete').checked,
-        name: document.getElementById('name').value.trim
+        isComplete: document.getElementById('edit-isComplete').checked,
+        name: document.getElementById('edit-name').value.trim()
 
     };
 
@@ -113,7 +113,7 @@ function closeInput() {
 
 /* Display the count of items 
    underscore in front means private (not enforced by js) */
-function _displayCount() {
+function _displayCount(itemCount) {
 
     const name = (itemCount == 1) ? 'to-do' : 'to-dos';
 
@@ -126,7 +126,6 @@ function _displayCount() {
 function _displayItems(data) {
 
     /* Sets the table body to be todos */
-
     const tBody = document.getElementById('todos');
     tBody.innerHTML = '';
 
@@ -140,40 +139,37 @@ function _displayItems(data) {
        each todo. */
 
     data.forEach(item => {
-        let isCompleteCheckBox = document.createElement('input');
-        isCompleteCheckBox.type = 'checkbox';
-        isCompleteCheckBox.disabled = 'true';
-        isCompleteCheckBox.checked = item.isComplete;
+      let isCompleteCheckBox = document.createElement('input');
+      isCompleteCheckBox.type = 'checkbox';
+      isCompleteCheckBox.disabled = 'true';
+      isCompleteCheckBox.checked = item.isComplete;
 
-        let editButton = button.cloneNode(false);
-        editButton.innerText = 'Edit';
-        editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
+      let editButton = button.cloneNode(false);
+      editButton.innerText = 'Edit';
+      editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
 
-        let deleteButton = button.cloneNode(false);
-        deleteButton.innerText = 'Delete';
-        deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
+      let deleteButton = button.cloneNode(false);
+      deleteButton.innerText = 'Delete';
+      deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
-        let tr = tBody.insertRow();
+      let tr = tBody.insertRow();
 
-        let td1 = tr.insertCell(0);
-        td1.appendChild(isCompleteCheckBox);
+      let td1 = tr.insertCell(0);
+      td1.appendChild(isCompleteCheckBox);
 
-        let td2 = tr.insertCell(1);
-        let textNode = document.createTextNode(item.name);
-        td2.appendChild(textNode);
+      let td2 = tr.insertCell(1);
+      let textNode = document.createTextNode(item.name);
+      td2.appendChild(textNode);
 
-        let td3 = tr.insertCell(2);
-        td3.appendChild(editButton);
+      let td3 = tr.insertCell(2);
+      td3.appendChild(editButton);
 
-        let td4 = tr.insertCell(3);
-        td4.appendChild(deleteButton);
-
-
+      let td4 = tr.insertCell(3);
+      td4.appendChild(deleteButton);
 
     });
 
     todos = data; 
-
 }
 
 

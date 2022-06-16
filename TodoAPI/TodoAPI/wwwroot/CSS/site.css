@@ -9,7 +9,7 @@
 /*Create a input type for the id submit
     button with the aira-label font
 */
-input[type = 'submit'], button, [aira-label]{
+input[type = 'submit'], button, [aria-label]{
     cursor: pointer;
 }
 

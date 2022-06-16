@@ -19,6 +19,10 @@ if (builder.Environment.IsDevelopment())
  
 }
 
+/* Necessary to config launch url to go to defaul index.html */
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
