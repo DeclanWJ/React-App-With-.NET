@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+<head >
     <!--Set up the header for the webpage-->
 
     <!--This defines type of character encoding - used to convert text into machine readable-->
     <meta charset="UTF-8" />
-    <title>Declan's CRUD</title>
+    <title>Declan's Financial Helper</title>
     <!--Create a relationship between current doc
         and linked doc. Aka create a stylesheet and link it-->
     <link rel="stylesheet" href="CSS/site.css" />
@@ -16,13 +16,19 @@
     1. define adding, editing, deleting todo items-->
 <body>
   
-    <h1>Declan's CRUD</h1>
-    <h3>Add</h3>
+    <h1 align="center"> Declan's Financial Helper</h1>
+
+    <h3>Add Financial Transactions</h3>
+
+    <!-- Financial Todo section (already complete - add in date to complete?)-->
+
+    <h3>Add Financial Todo/Reminder</h3>
 
     <!--Create a form for submitting data/creating a new todo (POST request)-->
     <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-        <input type="text" id="add-name" placeholder="New to-do"/>
-        <input type="submit" value="Add"/>
+        <input type="text" id="add-name" placeholder="New to-do" />
+        <input type="date" id="add-date"/>
+        <input type="submit" value="Add" />
     </form>
 
     <!--Create a division container to section up website
@@ -33,7 +39,7 @@
         <h3>Edit</h3>
         <form action="javascript:void(0);" onsubmit="updateItem()">
             <input type="hidden" id="edit-id"/>
-            <input type="checkbox" id="edit-isComplete" />
+            <input type="date" id="edit-completionDate" />
             <input type="text" id="edit-name" />
             <input type="submit" value="Save" />
             <!--a is used for hyperlinking
@@ -52,7 +58,7 @@
         <!--Define the table row headers-->
         <tr>
 
-            <th>Is Complete?</th>
+            <th>Completion Date</th>
             <th>Name</th>
             <th></th>
             <th></th>

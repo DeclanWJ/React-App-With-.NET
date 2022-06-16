@@ -23,10 +23,11 @@ function addItem() {
 
     /* Get the name of the todo from the text box (by id)*/
     const addNameTextBox = document.getElementById('add-name');
+    const addDateTextBox = document.getElementById('add-date');
 
     /* Create the item setting any default values*/
     const item = {
-        isComplete: false,
+        completionDate: addDateTextBox,
         name: addNameTextBox.value.trim()
     };
 
@@ -43,8 +44,9 @@ function addItem() {
     })
         .then(response => response.json())
         .then(() => {
-          getItems();
-          addNameTextBox.value = '';
+            getItems();
+            addNameTextBox.value = '';
+            addDateTextBox.value = '';
         })
         .catch(error => console.error('Unable to add item.', error));
 
@@ -68,7 +70,7 @@ function displayEditForm(id) {
 
     document.getElementById('edit-name').value = item.name;
     document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-isComplete').checked = item.isComplete;
+    document.getElementById('edit-completionDate') = item.completionDate;
     document.getElementById('editForm').style.display = 'block';
 
 }
@@ -82,7 +84,7 @@ function updateItem() {
     const item = {
 
         id: parseInt(itemId, 10), /* Parse from long (64bit) to int (32bit) */
-        isComplete: document.getElementById('edit-isComplete').checked,
+        completionDate: document.getElementById('edit-completionDate'),
         name: document.getElementById('edit-name').value.trim()
 
     };
@@ -139,33 +141,34 @@ function _displayItems(data) {
        each todo. */
 
     data.forEach(item => {
-      let isCompleteCheckBox = document.createElement('input');
-      isCompleteCheckBox.type = 'checkbox';
-      isCompleteCheckBox.disabled = 'true';
-      isCompleteCheckBox.checked = item.isComplete;
+        /* let isCompleteCheckBox = document.createElement('input');
+        isCompleteCheckBox.type = 'checkbox';
+        isCompleteCheckBox.disabled = 'true';
+        isCompleteCheckBox.checked = item.isComplete;*/
 
-      let editButton = button.cloneNode(false);
-      editButton.innerText = 'Edit';
-      editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
+        let editButton = button.cloneNode(false);
+        editButton.innerText = 'Edit';
+        editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
 
-      let deleteButton = button.cloneNode(false);
-      deleteButton.innerText = 'Delete';
-      deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
+        let deleteButton = button.cloneNode(false);
+        deleteButton.innerText = 'Delete';
+        deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
-      let tr = tBody.insertRow();
+        let tr = tBody.insertRow();
 
-      let td1 = tr.insertCell(0);
-      td1.appendChild(isCompleteCheckBox);
+        let td1 = tr.insertCell(0);
+        let dateNode = document.createTextNode(item.completionDate);
+        td1.appendChild(dateNode);
 
-      let td2 = tr.insertCell(1);
-      let textNode = document.createTextNode(item.name);
-      td2.appendChild(textNode);
+        let td2 = tr.insertCell(1);
+        let textNode = document.createTextNode(item.name);
+        td2.appendChild(textNode);
 
-      let td3 = tr.insertCell(2);
-      td3.appendChild(editButton);
+        let td3 = tr.insertCell(2);
+        td3.appendChild(editButton);
 
-      let td4 = tr.insertCell(3);
-      td4.appendChild(deleteButton);
+        let td4 = tr.insertCell(3);
+        td4.appendChild(deleteButton);
 
     });
 
