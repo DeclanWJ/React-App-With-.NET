@@ -24,10 +24,10 @@ function addItem() {
     /* Get the name of the todo from the text box (by id)*/
     const addNameTextBox = document.getElementById('add-name');
     const addDateTextBox = document.getElementById('add-date');
-
     /* Create the item setting any default values*/
+    console.log(typeof addDateTextBox.value);
     const item = {
-        completionDate: addDateTextBox,
+        completionDate: addDateTextBox.value,
         name: addNameTextBox.value.trim()
     };
 
@@ -157,8 +157,7 @@ function _displayItems(data) {
         let tr = tBody.insertRow();
 
         let td1 = tr.insertCell(0);
-        let dateNode = document.createTextNode(item.completionDate);
-        td1.appendChild(dateNode);
+        td1.innerText = item.completionDate;
 
         let td2 = tr.insertCell(1);
         let textNode = document.createTextNode(item.name);
