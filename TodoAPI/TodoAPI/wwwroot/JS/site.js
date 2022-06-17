@@ -3,6 +3,7 @@
 /* Define variables for the uri (uniform resource identifier)
    As well as an array to store the todos. */
 const uri = 'api/todoitems';
+
 let todos = [];
 
 
@@ -23,14 +24,14 @@ function addItem() {
 
     /* Get the name of the todo from the text box (by id)*/
     const addNameTextBox = document.getElementById('add-name');
-    const addDateTextBox = document.getElementById('add-date');
-    /* Create the item setting any default values*/
-    console.log(typeof addDateTextBox.value);
-    const item = {
-        completionDate: addDateTextBox.value,
-        name: addNameTextBox.value.trim()
-    };
 
+/*    const date = new Date(document.getElementById('add-date'));
+*/
+    /* Create the item setting any default values*/
+    const item = {
+/*        completionDate: date,
+*/        name: addNameTextBox.value.trim()
+    };
     /* Make POST request to backend controller to create todo (using json)
        Then display the items and reset nameTextBox     
     */
@@ -46,8 +47,8 @@ function addItem() {
         .then(() => {
             getItems();
             addNameTextBox.value = '';
-            addDateTextBox.value = '';
-        })
+/*            document.getElementById('add-date').value = '';
+*/        })
         .catch(error => console.error('Unable to add item.', error));
 
 }
@@ -70,8 +71,8 @@ function displayEditForm(id) {
 
     document.getElementById('edit-name').value = item.name;
     document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-completionDate') = item.completionDate;
-    document.getElementById('editForm').style.display = 'block';
+/*    document.getElementById('edit-completionDate') = item.completionDate;
+*/  document.getElementById('editForm').style.display = 'block';
 
 }
 
@@ -80,11 +81,12 @@ function displayEditForm(id) {
 function updateItem() {
 
     const itemId = document.getElementById('edit-id').value;
+/*    const newDate = new Date(document.getElementById('edit-completionDate').value);
+*/
 
     const item = {
 
         id: parseInt(itemId, 10), /* Parse from long (64bit) to int (32bit) */
-        completionDate: document.getElementById('edit-completionDate'),
         name: document.getElementById('edit-name').value.trim()
 
     };
@@ -156,22 +158,109 @@ function _displayItems(data) {
 
         let tr = tBody.insertRow();
 
-        let td1 = tr.insertCell(0);
-        td1.innerText = item.completionDate;
-
-        let td2 = tr.insertCell(1);
+/*        td1.innerText = item.completionDate;
+*/
+        let td2 = tr.insertCell(0);
         let textNode = document.createTextNode(item.name);
         td2.appendChild(textNode);
 
-        let td3 = tr.insertCell(2);
+        let td3 = tr.insertCell(1);
         td3.appendChild(editButton);
 
-        let td4 = tr.insertCell(3);
+        let td4 = tr.insertCell(2);
         td4.appendChild(deleteButton);
 
     });
 
     todos = data; 
+}
+
+
+
+
+
+
+/* Financial Functions */
+
+const uri2 = 'api/financialitems';
+
+let fItems = [];
+let fTotal = 0.0; 
+
+function getFinancialItems() {
+    fetch(uri2)
+        .then(response => response.json())
+        .then(data => _displayFinances(data))
+        .catch(error => console.error('Unable to get f items',error)); 
+}
+function addFinancialItem() {
+
+    const reasonTBox = document.getElementById('add-reason');
+    const amountNum = document.getElementById('add-amount');
+
+    const fItem = {
+        Reason: reasonTBox.value.trim(),
+        Amount: amountNum.value
+    }
+    fetch(uri2, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fItem)
+    })
+        .then(response => response.json)
+        .then(updateTotal(parseInt(amountNum.value)))
+        .then(() => {
+            getFinancialItems();
+            reasonTBox.value = '';
+            amountNum.value = '';
+        })
+        .catch(error => console.error('Unable to add item.', error));
+
+
+
+}
+
+function updateTotal(change) {
+
+    fTotal += change; 
+
+}
+
+function financeCount() {
+    return fItems.length;
+}
+
+
+function _displayFinances(data) {
+
+    const tBody = document.getElementById('finances');
+    tBody.innerHTML = '';
+
+    data.forEach(item => {
+
+        let tr = tBody.insertRow();
+
+        let td1 = tr.insertCell(0);
+        let textNode = document.createTextNode(item.reason);
+        td1.appendChild(textNode);
+
+        let td2 = tr.insertCell(1);
+        td2.innerText = item.amount;
+
+    })
+
+    let tr2 = tBody.insertRow();
+
+    let total = tr2.insertCell(0);
+    total.innerText = 'Total:';
+
+    let totalAmount = tr2.insertCell(1);
+    totalAmount.innerText = fTotal;
+
+    fItems = data; 
 }
 
 

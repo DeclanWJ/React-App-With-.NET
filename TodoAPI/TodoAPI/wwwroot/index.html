@@ -15,10 +15,31 @@
 <!--create the body of the website: 
     1. define adding, editing, deleting todo items-->
 <body>
-  
+
     <h1 align="center"> Declan's Financial Helper</h1>
 
     <h3>Add Financial Transactions</h3>
+
+    <form action="javascript:void(0);" method="POST" onsubmit="addFinancialItem()">
+        <input type="text" id="add-reason" placeholder="Financial Reason" required />
+        <input type="number" step="any" id="add-amount" placeholder="Amount (No $ required)" required />
+        <input type="submit" value="Add" />
+    </form>
+
+    <table>
+        <tr>
+
+            <th>Financial Reasons</th>
+            <th>Amount</th> <!--If deficit color red? else green-->
+            
+
+        </tr>
+        <tbody id="finances"></tbody>
+     
+    </table>
+
+    
+
 
     <!-- Financial Todo section (already complete - add in date to complete?)-->
 
@@ -26,26 +47,17 @@
 
     <!--Create a form for submitting data/creating a new todo (POST request)-->
     <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-        <input type="text" id="add-name" placeholder="New to-do" required/>
-        <input type="date" id="add-date" required/>
+        <input type="text" id="add-name" placeholder="New to-do" required />
         <input type="submit" value="Add" />
     </form>
 
-    <!--Create a division container to section up website
-        Allows for styling of all components in section. 
-        
-        Create a form for editing information-->
     <div id="editForm">
         <h3>Edit</h3>
         <form action="javascript:void(0);" onsubmit="updateItem()">
-            <input type="hidden" id="edit-id"/>
-            <input type="date" id="edit-completionDate" />
+            <input type="hidden" id="edit-id" />
             <input type="text" id="edit-name" />
             <input type="submit" value="Save" />
-            <!--a is used for hyperlinking
-                  in this case it is used to close the input
-                  when the symbol is clicked. 
-                  Symbol defined by &#10006 (X)-->
+
             <a onclick="closeInput()" aria-label="Close">&#10006</a>
         </form>
     </div>
@@ -58,7 +70,6 @@
         <!--Define the table row headers-->
         <tr>
 
-            <th>Completion Date</th>
             <th>Name</th>
             <th></th>
             <th></th>

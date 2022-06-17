@@ -9,6 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TodoContext>(opt =>
     opt.UseInMemoryDatabase("TodoList"));
 
+builder.Services.AddDbContext<FinancialContext>(opt =>
+    opt.UseInMemoryDatabase("FinancialList"));
+
 
 var app = builder.Build();
 

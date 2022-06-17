@@ -54,7 +54,6 @@ namespace TodoApi.Controllers
             }
 
             todoItem.Name = todoItemDTO.Name;
-            todoItem.CompletionDate = todoItemDTO.CompletionDate;
 
             try
             {
@@ -74,7 +73,6 @@ namespace TodoApi.Controllers
         {
             var todoItem = new TodoItem
             {
-                CompletionDate = todoItemDTO.CompletionDate,
                 Name = todoItemDTO.Name
             };
 
@@ -114,7 +112,6 @@ namespace TodoApi.Controllers
             {
                 Id = todoItem.Id,
                 Name = todoItem.Name,
-                CompletionDate = todoItem.CompletionDate
             };
     }
 }
