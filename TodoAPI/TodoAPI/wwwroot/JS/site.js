@@ -176,10 +176,6 @@ function _displayItems(data) {
 }
 
 
-
-
-
-
 /* Financial Functions */
 
 const uri2 = 'api/financialitems';
